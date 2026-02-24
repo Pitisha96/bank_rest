@@ -7,9 +7,9 @@ spring:
     name: bankcards
 
   datasource:
-    url: ${BANK_CARD_DB_URL}
-    username: ${BANK_CARD_DB_USERNAME}
-    password: ${BANK_CARDS_DB_PASSWORD}
+    url: ${BANK_CARD_DB_URL:jdbc:postgresql://localhost:5432/bank_card_db?currentSchema=bank_card_schema}
+    username: ${BANK_CARD_DB_USERNAME:bank_card_user}
+    password: ${BANK_CARDS_DB_PASSWORD:password}
 
   jpa:
     hibernate:
@@ -17,19 +17,14 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        default_schema: bankcards
+        default_schema: bank_card_schema
 
   liquibase:
+    change-log: classpath:/db/migration/db.changelog-master.yaml
     enabled: true
     contexts: dev
-    default-schema: bankcards
-    liquibase-schema: bankcards
-
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${OAUTH2_ISSUER_URI}
+    default-schema: bank_card_schema
+    liquibase-schema: bank_card_schema
 
 springdoc:
   api-docs:
