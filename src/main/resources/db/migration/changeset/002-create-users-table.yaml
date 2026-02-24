@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-users-table
+      author: Pitisha96
+      context: dev
+
+      preConditions:
+        - dbms:
+            type: postgresql
+        - tableExists:
+            tableName: roles
+        - not:
+            tableExists:
+              tableName: users
+
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: '54321'
+              - column:
+                  name: first_name
+                  value: Admin
+              - column:
+                  name: last_name
+                  value: Adminov
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: user
+              - column:
+                  name: password
+                  value: '12345'
+              - column:
+                  name: first_name
+                  value: User
+              - column:
+                  name: last_name
+                  value: Userov
+
+      rollback:
+        - dropTable:
+            tableName: users

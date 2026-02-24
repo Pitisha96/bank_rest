@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-cards-table
+      author: Pitisha96
+      context: dev
+
+      preConditions:
+        - dbms:
+            type: postgresql
+        - not:
+            tableExists:
+              tableName: cards
+
+      changes:
+        - createTable:
+            tableName: cards
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: number
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    checkConstraint: "number ~ '^[0-9]{16,20}$'"
+              - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableName: users
+                    referencedColumnName: id
+                    foreignKeyName: fk_cards_users
+              - column:
+                  name: expiry_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: numeric(19,2)
+                  constraints:
+                    nullable: false
+
+      rollback:
+        - dropTable:
+            tableName: cards
