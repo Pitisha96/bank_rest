@@ -1,8 +1,38 @@
-#
-# application.yml — главный конфигурационный файл Spring Boot.
+server:
+  port: 8081
 
-Что нужно сделать:
-  - Указать настройки подключения к базе данных.
-  - Указать порт приложения.
-  - Настроить параметры безопасности и JWT.
-  - Включить Swagger UI.
+spring:
+
+  application:
+    name: bankcards
+
+  datasource:
+    url: ${BANK_CARD_DB_URL}
+    username: ${BANK_CARD_DB_USERNAME}
+    password: ${BANK_CARDS_DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: bankcards
+
+  liquibase:
+    enabled: true
+    contexts: dev
+    default-schema: bankcards
+    liquibase-schema: bankcards
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH2_ISSUER_URI}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
