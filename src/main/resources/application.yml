@@ -1,6 +1,16 @@
 server:
   port: 8081
 
+app:
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:admin123}
+  db:
+    secret: ${DB_CRYPTO_SECRET}
+  auth:
+    secret: ${AUTH_JWT_SECRET}
+    expiration: 3600
+
 spring:
 
   application:
