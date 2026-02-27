@@ -32,51 +32,17 @@ databaseChangeLog:
                     unique: true
               - column:
                   name: password
-                  type: varchar(50)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: first_name
-                  type: varchar(50)
+                  name: role_id
+                  type: BIGINT
                   constraints:
                     nullable: false
-              - column:
-                  name: last_name
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-
-        - insert:
-            tableName: users
-            columns:
-              - column:
-                  name: username
-                  value: admin
-              - column:
-                  name: password
-                  value: '54321'
-              - column:
-                  name: first_name
-                  value: Admin
-              - column:
-                  name: last_name
-                  value: Adminov
-
-        - insert:
-            tableName: users
-            columns:
-              - column:
-                  name: username
-                  value: user
-              - column:
-                  name: password
-                  value: '12345'
-              - column:
-                  name: first_name
-                  value: User
-              - column:
-                  name: last_name
-                  value: Userov
+                    referencedTableName: roles
+                    referencedColumnName: id
+                    foreignKeyName: fk_users_roles
 
       rollback:
         - dropTable:

@@ -17,7 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Role {
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
